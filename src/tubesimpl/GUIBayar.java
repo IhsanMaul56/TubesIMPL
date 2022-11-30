@@ -209,6 +209,11 @@ public class GUIBayar extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Home");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Menu");
@@ -281,19 +286,35 @@ public class GUIBayar extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         //pindah class ke pembayaran
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        GUIBayar dashboard=new GUIBayar();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       //pindah class ke tambah pesanan 
+       //pindah class ke tambah pesanan
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         //pindah class ke laporan
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        Laporan dashboard=new Laporan();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         //keluar dari aplikasi
+        System.exit(0);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        Home dashboard=new Home();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
+    }//GEN-LAST:event_jMenu1ActionPerformed
 
     /**
      * @param args the command line arguments
