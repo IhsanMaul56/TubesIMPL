@@ -51,6 +51,7 @@ public class GUIBayar extends javax.swing.JFrame {
         ButtonCari = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -209,6 +210,15 @@ public class GUIBayar extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Home");
+
+        jMenuItem5.setText("Keluar");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Menu");
@@ -238,6 +248,11 @@ public class GUIBayar extends javax.swing.JFrame {
         jMenu2.add(jMenuItem1);
 
         jMenuItem4.setText("Keluar");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
@@ -276,15 +291,38 @@ public class GUIBayar extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         //pindah class ke pembayaran
+        this.setVisible(false);
+        GUIBayar dashboard=new GUIBayar();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       //pindah class ke tambah pesanan 
+       //pindah class ke tambah pesanan
+       this.setVisible(false);
+       TambahData dashboard=new TambahData();
+       dashboard.setLocationRelativeTo(dashboard);
+       dashboard.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         //pindah class ke laporan
+        this.setVisible(false);
+        Laporan dashboard=new Laporan();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        this.setVisible(false);
+        Home dashboard=new Home();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -345,6 +383,7 @@ public class GUIBayar extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
