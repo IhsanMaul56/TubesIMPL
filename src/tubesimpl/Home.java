@@ -152,26 +152,26 @@ public class Home extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-//                this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
-//                TambahData dashboard=new TambahData();
-//                dashboard.setLocationRelativeTo(dashboard);
-//                dashboard.setVisible(true);         
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        TambahData dashboard=new TambahData();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);         
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-                this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
-                Laporan dashboard=new Laporan();
-                dashboard.setLocationRelativeTo(dashboard);
-                dashboard.setVisible(true);
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        Laporan dashboard=new Laporan();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-//                this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
-//                GUIBayar dashboard=new GUIBayar();
-//                dashboard.setLocationRelativeTo(dashboard);
-//                dashboard.setVisible(true);
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        GUIBayar dashboard=new GUIBayar();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
@@ -180,9 +180,9 @@ public class Home extends javax.swing.JFrame {
 
     private void jCheckBoxMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem2ActionPerformed
 //        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
-//        GUIBayar dashboard=new GUIBayar();
-//        dashboard.setLocationRelativeTo(dashboard);
-//        dashboard.setVisible(true);
+        GUIBayar dashboard=new GUIBayar();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
     }//GEN-LAST:event_jCheckBoxMenuItem2ActionPerformed
 
     private void jCheckBoxMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem4ActionPerformed
