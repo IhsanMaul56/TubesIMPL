@@ -159,12 +159,12 @@ public class login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            String sql = "SELECT *FROM LOGIN where User_name='" + nama.getText() + "' AND pass='" + pas.getText() + "'";
+            String sql = "SELECT *FROM LOGIN where Username ='" + nama.getText() + "' AND Password='" + pas.getText() + "'";
             java.sql.Connection conn = (java.sql.Connection) tubesimpl.koneksi.koneksiDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             java.sql.ResultSet rs = pst.executeQuery(sql);
             if (rs.next()) {
-                if (nama.getText().equals(rs.getString("User_name")) && pas.getText().equals(rs.getString("pass"))) {
+                if (nama.getText().equals(rs.getString("Username")) && pas.getText().equals(rs.getString("Password"))) {
                     JOptionPane.showMessageDialog(this, "Login Berhasil");
                     this.setVisible(false);// menyembunyikan tampilan dan menampilkan home page
                     Home dashboard = new Home();
