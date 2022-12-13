@@ -25,7 +25,26 @@ public class TambahData extends javax.swing.JFrame {
     }
 
     private void autoNumber(){
-
+        String noPesanan = "C0000";
+        int i = 1;
+        try{
+            String sql ="select ID from pemesanan";
+            java.sql.Connection conn = (java.sql.Connection)tubesimpl.koneksi.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            java.sql.ResultSet rs=pst.executeQuery(sql);
+            
+            while(rs.next()){
+                noPesanan = rs.getString("ID");
+            }
+            noPesanan = noPesanan.substring(1);
+            i = Integer.parseInt(noPesanan)+1;
+            noPesanan = "000"+i;
+            noPesanan = "C" + noPesanan.substring(noPesanan.length()-4);
+            nopesanan.setText(noPesanan);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
     
     
@@ -314,18 +333,49 @@ public class TambahData extends javax.swing.JFrame {
 
     private void jeniskamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jeniskamarActionPerformed
         // TODO add your handling code here:     
-
+    lama = Integer.parseInt(durasi.getText());
+    
+    if(jeniskamar.getSelectedItem()=="Kecil"){
+        total = lama * 450000;
+        tarif.setText(""+total);
+    }
+    if(jeniskamar.getSelectedItem()=="Sedang"){
+        total = lama * 600000;
+        tarif.setText(""+total);
+    }
+    if(jeniskamar.getSelectedItem()=="Besar"){
+        total = lama * 850000;
+        tarif.setText(""+total);
+    }
     
     }//GEN-LAST:event_jeniskamarActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
         // TODO add your handling code here:
-
+        nama.setText("");
+        alamat.setText("");
+        durasi.setText("");
+        tarif.setText("");
     }//GEN-LAST:event_clearActionPerformed
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
         // TODO add your handling code here:
-     
+    try
+    {
+    String sql ="INSERT INTO PEMESANAN VALUE ('"+nopesanan.getText()+"','"+nama.getText()+"','"+jeniskelamin.getSelectedItem()+"','"+alamat.getText()+"','"+((JTextField)tanggal.getDateEditor().getUiComponent()).getText()+"','"+durasi.getText()+"','"+jeniskamar.getSelectedItem()+"','"+tarif.getText()+"')";
+        java.sql.Connection conn = (java.sql.Connection)tubesimpl.koneksi.koneksiDB();
+        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+        pst.execute(sql);
+        JOptionPane.showMessageDialog(this,"Data Berhasil Di Input");
+    }
+    catch (Exception e)
+    {
+        JOptionPane.showMessageDialog(this, e);
+    }
+    this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+    Home dashboard=new Home();
+    dashboard.setLocationRelativeTo(dashboard);
+    dashboard.setVisible(true);          
     }//GEN-LAST:event_simpanActionPerformed
 
     private void tarifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tarifActionPerformed
@@ -341,16 +391,25 @@ public class TambahData extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        TambahData dashboard=new TambahData();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-  
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        GUIBayar dashboard=new GUIBayar();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);  
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        Laporan dashboard=new Laporan();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -360,6 +419,10 @@ public class TambahData extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        Home dashboard=new Home();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);              
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
