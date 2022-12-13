@@ -4,6 +4,10 @@
  */
 package tubesimpl;
 
+import java.awt.HeadlessException;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Ihsan Maulana
@@ -290,7 +294,30 @@ public class GUIBayar extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void ButtonCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCariActionPerformed
-        
+        //Untuk Mencari Pesanan
+        try{
+            String sql = "SELECT * FROM PEMESANAN where ID = '" + TextCari.getText() + "' or Nama Like '" + TextCari.getText() + "'";
+            java.sql.Connection conn = (java.sql.Connection)tubesimpl.koneksi.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            java.sql.ResultSet rs=pst.executeQuery(sql);
+            
+            if(rs.next()){
+                JOptionPane.showMessageDialog(this, "Data Ditemukan");
+                jTextField2.setText(rs.getString("ID"));     
+                jTextField3.setText(rs.getString("Nama"));
+                jTextField4.setText(rs.getString("JK"));
+                jTextField5.setText(rs.getString("tanggal_masuk"));                   
+                jTextField6.setText(rs.getString("Durasi"));
+                jTextField7.setText(rs.getString("Jenis_Kamar"));
+                jTextField8.setText(rs.getString("Tarif"));
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Data tidak Ditemukan");
+                TextCari.setText("");
+            }
+        }catch(HeadlessException | SQLException e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }//GEN-LAST:event_ButtonCariActionPerformed
 
     private void TextCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextCariActionPerformed
