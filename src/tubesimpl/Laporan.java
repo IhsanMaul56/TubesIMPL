@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -49,6 +50,8 @@ public class Laporan extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 204, 204));
 
         jLabel1.setText("No. Pemesanan/Nama");
 
@@ -177,11 +180,52 @@ public class Laporan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
+        try {
+                String sql ="SELECT *FROM PEMESANAN NATURAL JOIN PEMBAYARAN where Nama like'"+jTextField1.getText()+"' or ID like '"+jTextField1.getText()+"'";
+                java.sql.Connection conn = (java.sql.Connection)tubesimpl.koneksi.koneksiDB();
+                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                java.sql.ResultSet rs=pst.executeQuery(sql);
+            DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+            dtm.setRowCount(0);
+            String [] data = new String[10];
+            int i = 1;
+            
+            if(rs.next()){
+                data[0] = rs.getString(1);
+                data[1] = rs.getString(2);
+                data[2] = rs.getString(6);
+                data[3] = rs.getString(8);
+                data[4] = rs.getString(7);
+                data[5] = rs.getString(10);
+                data[6] = rs.getString(3);
+                
+                dtm.addRow(data);
+                i++;
+            }else {
+                JOptionPane.showMessageDialog(this, "Data Tidak Ada");
+                GetData();
+            }
+        } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e);
+
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    try {
         // TODO add your handling code here:
+        int konfirm=JOptionPane.showConfirmDialog(this, "Pemesanan akan dibatalkan ?","Konfirmasi",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        if(konfirm==0){
+            String sql ="delete from pemesanan where Nama like'"+jTextField1.getText()+"' or  ID='"+jTextField1.getText ()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubesimpl.koneksi.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            
+            String sql2 ="delete from pembayaran where Nama like'"+jTextField1.getText()+"' or ID='"+jTextField1.getText ()+"'";            
+            java.sql.PreparedStatement pst2 = conn.prepareStatement(sql2);
+            pst2.execute();
+        }
+    }catch (SQLException | HeadlessException e) {} GetData();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -256,6 +300,17 @@ public class Laporan extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void GetData(){ // menampilkan data dari database
+    try {
+        Connection conn =(Connection)tubesimpl.koneksi.koneksiDB();
+        java.sql.Statement stm = conn.createStatement();
+        java.sql.ResultSet sql = stm.executeQuery("select * from pemesanan natural join pembayaran");
+        jTable1.setModel(DbUtils.resultSetToTableModel(sql));
+    }
+    catch (SQLException | HeadlessException e) {
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
