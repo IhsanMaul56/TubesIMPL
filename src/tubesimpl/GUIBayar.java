@@ -109,6 +109,11 @@ public class GUIBayar extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cash", "Debit", "Credit Card", "Transfer" }));
 
         jButton1.setText("Bayar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         ButtonCari.setText("Cari");
         ButtonCari.addActionListener(new java.awt.event.ActionListener() {
@@ -358,6 +363,25 @@ public class GUIBayar extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try
+    {
+    String sql ="INSERT INTO PEMBAYARAN VALUE ('"+jTextField2.getText()+"','"+jTextField3.getText()+"','"+jTextField8.getText()+"','"+jComboBox1.getSelectedItem()+"','"+"lunas"+"')";
+        java.sql.Connection conn = (java.sql.Connection)tubesimpl.koneksi.koneksiDB();
+        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+        pst.execute(sql);
+        JOptionPane.showMessageDialog(this,"Data Berhasil Di Input");
+    }
+        catch (Exception e)
+    {
+        JOptionPane.showMessageDialog(this, e);
+    }
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        Home dashboard=new Home();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
