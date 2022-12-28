@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -41,15 +42,27 @@ public class Laporan extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem4 = new javax.swing.JCheckBoxMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("No. Pemesanan/Nama");
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jButton1.setText("Cari");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -112,45 +125,50 @@ public class Laporan extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Home");
+
+        jMenuItem5.setText("Kembali");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Menu");
 
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("Tambah Pesanan");
-        jCheckBoxMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem1.setText("Tambah Pesanan");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItem1ActionPerformed(evt);
+                jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu2.add(jCheckBoxMenuItem1);
+        jMenu2.add(jMenuItem1);
 
-        jCheckBoxMenuItem2.setSelected(true);
-        jCheckBoxMenuItem2.setText("Pembayaran");
-        jCheckBoxMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem2.setText("Pembayaran");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItem2ActionPerformed(evt);
+                jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu2.add(jCheckBoxMenuItem2);
+        jMenu2.add(jMenuItem2);
 
-        jCheckBoxMenuItem3.setSelected(true);
-        jCheckBoxMenuItem3.setText("Laporan");
-        jCheckBoxMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem3.setText("Laporan");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItem3ActionPerformed(evt);
+                jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu2.add(jCheckBoxMenuItem3);
+        jMenu2.add(jMenuItem3);
 
-        jCheckBoxMenuItem4.setSelected(true);
-        jCheckBoxMenuItem4.setText("Keluar");
-        jCheckBoxMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem4.setText("Keluar");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItem4ActionPerformed(evt);
+                jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu2.add(jCheckBoxMenuItem4);
+        jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
 
@@ -170,38 +188,105 @@ public class Laporan extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBoxMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem3ActionPerformed
-        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
-        Laporan dashboard=new Laporan();
-        dashboard.setLocationRelativeTo(dashboard);
-        dashboard.setVisible(true);
-    }//GEN-LAST:event_jCheckBoxMenuItem3ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
+    try {
+            String sql ="SELECT *FROM PEMESANAN NATURAL JOIN PEMBAYARAN where Nama like'"+jTextField1.getText()+"' or ID like '"+jTextField1.getText()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubesimpl.koneksi.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            java.sql.ResultSet rs=pst.executeQuery(sql);
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        dtm.setRowCount(0);
+        String [] data = new String[10];
+        int i = 1;
+
+        if(rs.next()){
+        data[0] = rs.getString(1);
+        data[1] = rs.getString(2);
+        data[2] = rs.getString(6);
+        data[3] = rs.getString(8);
+        data[4] = rs.getString(7);
+        data[5] = rs.getString(10);
+        data[6] = rs.getString(3);
+
+        dtm.addRow(data);
+        i++;
+
+        }else {
+        JOptionPane.showMessageDialog(this, "Data Tidak Ada");
+        GetData();
+        }
+     
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e);
+
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        try { // hapus data
+        int konfirm=JOptionPane.showConfirmDialog(this, "Pemesanan akan dibatalkan ?","Konfirmasi",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        if(konfirm==0){
+            String sql ="delete from pemesanan where Nama like'"+jTextField1.getText()+"' or  ID='"+jTextField1.getText ()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubesimpl.koneksi.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            
+            String sql2 ="delete from pembayaran where Nama like'"+jTextField1.getText()+"' or ID='"+jTextField1.getText ()+"'";            
+            java.sql.PreparedStatement pst2 = conn.prepareStatement(sql2);
+            pst2.execute();
+        }
+        } catch (SQLException | HeadlessException e) {} GetData(); 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
-//        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
-//        TambahData dashboard=new TambahData();
-//        dashboard.setLocationRelativeTo(dashboard);
-//        dashboard.setVisible(true);
-    }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        TambahData dashboard=new TambahData();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jCheckBoxMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem2ActionPerformed
-//        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
-//        GUIBayar dashboard=new GUIBayar();
-//        dashboard.setLocationRelativeTo(dashboard);
-//        dashboard.setVisible(true);
-    }//GEN-LAST:event_jCheckBoxMenuItem2ActionPerformed
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        GUIBayar dashboard=new GUIBayar();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jCheckBoxMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem4ActionPerformed
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        Laporan dashboard=new Laporan();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
         System.exit(0);
-    }//GEN-LAST:event_jCheckBoxMenuItem4ActionPerformed
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
+        Home dashboard=new Home();
+        dashboard.setLocationRelativeTo(dashboard);
+        dashboard.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+        String key = jTextField1.getText();
+        if(key!=""){
+            
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
 
     /**
      * @param args the command line arguments
@@ -238,18 +323,30 @@ public class Laporan extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void GetData(){ // menampilkan data dari database
+    try {
+        Connection conn =(Connection)tubesimpl.koneksi.koneksiDB();
+        java.sql.Statement stm = conn.createStatement();
+        java.sql.ResultSet sql = stm.executeQuery("select * from pemesanan natural join pembayaran");
+        jTable1.setModel(DbUtils.resultSetToTableModel(sql));
+    }
+    catch (SQLException | HeadlessException e) {
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
