@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
+import net.proteanit.sql.DbUtils;
 /**
  *
  * @author ASUS
@@ -50,8 +50,19 @@ public class Laporan extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(240, 219, 219));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel1.setText("No. Pemesanan/Nama");
 
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
+
+        jButton1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jButton1.setText("Cari");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,6 +70,7 @@ public class Laporan extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jButton2.setText("Batalkan Pesan");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,6 +78,7 @@ public class Laporan extends javax.swing.JFrame {
             }
         });
 
+        jTable1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -95,7 +108,7 @@ public class Laporan extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
-                        .addGap(0, 158, Short.MAX_VALUE)))
+                        .addGap(0, 149, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -177,11 +190,53 @@ public class Laporan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
+        try{
+            String sql ="SELECT *FROM PEMESANAN NATURAL JOIN PEMBAYARAN where Nama like'"+jTextField1.getText()+"' or ID like '"+jTextField1.getText()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubesimpl.koneksi.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            java.sql.ResultSet rs=pst.executeQuery(sql);
+            
+            DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+            dtm.setRowCount(0);
+            String [] data = new String[10];
+            int i = 1;
+
+            if(rs.next()){
+                data[0] = rs.getString(1);
+                data[1] = rs.getString(2);
+                data[2] = rs.getString(6);
+                data[3] = rs.getString(8);
+                data[4] = rs.getString(7);
+                data[5] = rs.getString(10);
+                data[6] = rs.getString(3);
+
+                dtm.addRow(data);
+            i++;
+            }else {
+                JOptionPane.showMessageDialog(this, "Data Tidak Ada");
+                GetData();
+            }
+        }
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        try { // hapus data
+        int konfirm=JOptionPane.showConfirmDialog(this, "Pemesanan akan dibatalkan ?","Konfirmasi",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        if(konfirm==0){
+            String sql ="delete from pemesanan where Nama like'"+jTextField1.getText()+"' or  ID='"+jTextField1.getText ()+"'";
+            java.sql.Connection conn = (java.sql.Connection)tubesimpl.koneksi.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            
+            String sql2 ="delete from pembayaran where Nama like'"+jTextField1.getText()+"' or ID='"+jTextField1.getText ()+"'";            
+            java.sql.PreparedStatement pst2 = conn.prepareStatement(sql2);
+            pst2.execute();
+        }
+    }
+    catch (SQLException | HeadlessException e) {} GetData();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -220,6 +275,13 @@ public class Laporan extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        String key = jTextField1.getText();
+        if(key!=""){
+            
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
 
     /**
      * @param args the command line arguments
@@ -274,4 +336,16 @@ public class Laporan extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    private void GetData() {
+        try {
+        Connection conn =(Connection)tubesimpl.koneksi.koneksiDB();
+        java.sql.Statement stm = conn.createStatement();
+        java.sql.ResultSet sql = stm.executeQuery("select * from pemesanan natural join pembayaran");
+        jTable1.setModel(DbUtils.resultSetToTableModel(sql));
+    }
+    catch (SQLException | HeadlessException e) 
+        {
+        }
+    }
 }
