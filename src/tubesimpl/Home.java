@@ -41,6 +41,9 @@ public class Home extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(240, 219, 219));
+
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("Tambah Pesanan");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -48,6 +51,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setText("Pembayaran");
         jButton2.setMaximumSize(new java.awt.Dimension(120, 22));
         jButton2.setMinimumSize(new java.awt.Dimension(120, 22));
@@ -58,6 +62,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton3.setText("Laporan");
         jButton3.setMaximumSize(new java.awt.Dimension(120, 22));
         jButton3.setMinimumSize(new java.awt.Dimension(120, 22));
