@@ -7,6 +7,10 @@ import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 import static javax.swing.text.html.HTML.Tag.SELECT;
 import javax.swing.JTextField;
+import java.util.regex.*;
+import com.toedter.calendar.JDateChooser;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -360,22 +364,40 @@ public class TambahData extends javax.swing.JFrame {
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
         // TODO add your handling code here:
-    try
+   try
     {
-    String sql ="INSERT INTO PEMESANAN VALUE ('"+nopesanan.getText()+"','"+nama.getText()+"','"+jeniskelamin.getSelectedItem()+"','"+alamat.getText()+"','"+((JTextField)tanggal.getDateEditor().getUiComponent()).getText()+"','"+durasi.getText()+"','"+jeniskamar.getSelectedItem()+"','"+tarif.getText()+"')";
-        java.sql.Connection conn = (java.sql.Connection)tubesimpl.koneksi.koneksiDB();
-        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-        pst.execute(sql);
-        JOptionPane.showMessageDialog(this,"Data Berhasil Di Input");
+        String date = new SimpleDateFormat("").format(tanggal.getDate());
+        if(nama.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Nama tidak boleh kosong", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else if(!nama.getText().matches("[a-zA-Z]*")){
+            JOptionPane.showMessageDialog(this,"Nama tidak boleh berupa angka", "Warning", JOptionPane.WARNING_MESSAGE);
+        }                
+        else if(alamat.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Alamat tidak boleh kosong", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else if(durasi.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Durasi tidak boleh kosong", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else if(!durasi.getText().matches("[0-9]*")){
+            JOptionPane.showMessageDialog(this,"Durasi tidak boleh berupa huruf", "Warning", JOptionPane.WARNING_MESSAGE);
+        } 
+        else{
+            String sql ="INSERT INTO PEMESANAN VALUE ('"+nopesanan.getText()+"','"+nama.getText()+"','"+jeniskelamin.getSelectedItem()+"','"+alamat.getText()+"','"+((JTextField)tanggal.getDateEditor().getUiComponent()).getText()+"','"+durasi.getText()+"','"+jeniskamar.getSelectedItem()+"','"+tarif.getText()+"')";
+            java.sql.Connection conn = (java.sql.Connection)tubesimpl.koneksi.koneksiDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute(sql);
+            JOptionPane.showMessageDialog(this,"Data Berhasil Di Input");
+        }
     }
     catch (Exception e)
     {
+        
         JOptionPane.showMessageDialog(this, e);
     }
-    this.setVisible(false);//menyembunyikan tampilan dan menampilkan home page
-    Home dashboard=new Home();
-    dashboard.setLocationRelativeTo(dashboard);
-    dashboard.setVisible(true);          
+   
+              
+        
     }//GEN-LAST:event_simpanActionPerformed
 
     private void tarifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tarifActionPerformed
